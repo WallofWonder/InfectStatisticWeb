@@ -7,7 +7,8 @@
         name: 'Echarts',
         data () {
             return {
-                msg: 'My first Echart'
+                msg: 'My first Echart',
+                mydata: []
             }
         },
         mounted () {
@@ -15,33 +16,58 @@
         },
 
         methods: {
+            // getData () {
+            //     let that = this
+            //     this.axios.get('http://localhost:8888//statistics/provinces/confirmed')
+            //         .then(function (response) {
+            //             // return response.data.provinces
+            //             console.log(response.data.provinces)
+            //             let datas = response.data.provinces
+            //             for(var i=0;i<datas;++i){
+            //                 that.mydata.push({
+            //                     name: datas[i].name,
+            //                     value: datas[i].value
+            //                 })
+            //             }
+            //         }, function (err) {
+            //             console.log(err)
+            //         })
+            // },
+            // convertData (data) {
+            //     let res = []
+            //     for(var i=0;i<data.length;++i){
+            //         res.push({
+            //             name: data[i].name,
+            //             value: data[i].value
+            //         })
+            //     }
+            //     return res
+            // },
             drawLine () {
+                let that = this
                 // 基于准备好的dom，初始化echarts实例
                 const myChart = this.$echarts.init(document.getElementById('myChart'))
                 // 设置相关参数
-                function randomData() {
-                    return Math.round(Math.random()*100)
+
+                function getData() {
+                    that.axios.get('http://localhost:8888//statistics/provinces/confirmed')
+                        .then(function (response) {
+                            // return response.data.provinces
+                            // console.log(response.data.provinces)
+                            let datas = response.data.provinces
+                            for(var i=0;i<datas.length;++i){
+                                that.mydata.push({
+                                    name: datas[i].name,
+                                    value: datas[i].value
+                                })
+                            }
+                            console.log(that.mydata)
+                            myChart.setOption(option)
+                        }, function (err) {
+                            console.log(err)
+                        })
                 }
 
-                var mydata = [
-                    {name: '福建',value: randomData() }, {name: '天津',value: randomData() },
-                    {name: '上海',value: randomData() },{name: '重庆',value: randomData() },
-                    {name: '河北',value: randomData() },{name: '河南',value: randomData() },
-                    {name: '云南',value: randomData() },{name: '辽宁',value: randomData() },
-                    {name: '黑龙江',value: randomData() },{name: '湖南',value: randomData() },
-                    {name: '安徽',value: randomData() },{name: '山东',value: randomData() },
-                    {name: '新疆',value: randomData() },{name: '江苏',value: randomData() },
-                    {name: '浙江',value: randomData() },{name: '江西',value: randomData() },
-                    {name: '湖北',value: randomData() },{name: '广西',value: randomData() },
-                    {name: '甘肃',value: randomData() },{name: '山西',value: randomData() },
-                    {name: '内蒙古',value: randomData() },{name: '陕西',value: randomData() },
-                    {name: '吉林',value: randomData() }, {name: '北京',value: randomData() },
-                    {name: '贵州',value: randomData() },{name: '广东',value: randomData() },
-                    {name: '青海',value: randomData() },{name: '西藏',value: randomData() },
-                    {name: '四川',value: randomData() },{name: '宁夏',value: randomData() },
-                    {name: '海南',value: randomData() },{name: '台湾',value: randomData() },
-                    {name: '香港',value: randomData() },{name: '澳门',value: randomData() }
-                ]
 
                 var option = {
                     backgroundColor: 'transparent',
@@ -79,11 +105,12 @@
                                 color: 'rgba(0,0,0,0.7)'
                             }
                         },
-                        data: mydata
+                        data: that.mydata
                     }]
                 }
+                // console.log(option.series.data)
                 // 绘制图表
-                myChart.setOption(option)
+                getData()
             }
         }
     }
