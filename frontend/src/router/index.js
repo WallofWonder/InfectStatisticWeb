@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Echarts from '../views/Echarts.vue'
-import dataTest from "../views/dataTest";
+import dataTest from "../views/dataTest"
+import Home from "../views/Home";
 
 Vue.use(VueRouter)
 
@@ -28,6 +29,11 @@ const routes = [
   //     }
   //   ]
   // },
+  {
+    path: '/',
+    name: 'home',
+    component: Home
+  },
   {
     path: '/dataTest',
     name: 'dataTest',
