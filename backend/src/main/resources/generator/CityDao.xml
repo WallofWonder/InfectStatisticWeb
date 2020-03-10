@@ -71,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, `date`, provinceShortName, cityName, currentConfirmedCount, confirmedCount, suspectedCount, 
+    id, `date`, provinceShortName, cityName, currentConfirmedCount, confirmedCount, suspectedCount,
     curedCount, deadCount
   </sql>
   <select id="selectByExample" parameterType="com.infect.backend.model.CityPOExample" resultMap="BaseResultMap">
@@ -89,7 +89,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from city
     where id = #{id,jdbcType=INTEGER}
@@ -105,12 +105,12 @@
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.infect.backend.model.CityPO" useGeneratedKeys="true">
-    insert into city (`date`, provinceShortName, cityName, 
-      currentConfirmedCount, confirmedCount, 
+    insert into city (`date`, provinceShortName, cityName,
+      currentConfirmedCount, confirmedCount,
       suspectedCount, curedCount, deadCount
       )
-    values (#{date,jdbcType=TIMESTAMP}, #{provinceshortname,jdbcType=VARCHAR}, #{cityname,jdbcType=VARCHAR}, 
-      #{currentconfirmedcount,jdbcType=INTEGER}, #{confirmedcount,jdbcType=INTEGER}, 
+    values (#{date,jdbcType=TIMESTAMP}, #{provinceshortname,jdbcType=VARCHAR}, #{cityname,jdbcType=VARCHAR},
+      #{currentconfirmedcount,jdbcType=INTEGER}, #{confirmedcount,jdbcType=INTEGER},
       #{suspectedcount,jdbcType=INTEGER}, #{curedcount,jdbcType=INTEGER}, #{deadcount,jdbcType=INTEGER}
       )
   </insert>
@@ -266,5 +266,9 @@
       curedCount = #{curedcount,jdbcType=INTEGER},
       deadCount = #{deadcount,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="truncate">
+    truncate table city
   </update>
 </mapper>

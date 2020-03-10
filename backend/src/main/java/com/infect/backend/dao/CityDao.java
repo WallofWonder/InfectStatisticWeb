@@ -27,4 +27,6 @@ public interface CityDao {
     int updateByPrimaryKeySelective(CityPO record);
 
     int updateByPrimaryKey(CityPO record);
+
+    void truncate();
 }
