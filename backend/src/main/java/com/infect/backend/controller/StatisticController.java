@@ -29,8 +29,7 @@ public class StatisticController {
     @GetMapping("/provinces/{type}")
     @ResponseBody
     NationVO getNationalProvinces(@PathVariable String type) {
-        provinceService.getNationalProvince(LocalDate.now(), type);
-        return null;
+        return provinceService.getNationalProvince(LocalDate.now(), type);
     }
 
     @PostMapping("/test")
