@@ -24,6 +24,7 @@ public class StatisticController {
     ProvinceService provinceService;
 
     /**
+     * 获取全国各省疫情数据
      * @return
      */
     @GetMapping("/provinces/{type}")
@@ -31,20 +32,4 @@ public class StatisticController {
     NationVO getNationalProvinces(@PathVariable String type) {
         return provinceService.getNationalProvince(LocalDate.now(), type);
     }
-
-    @PostMapping("/test")
-    @ResponseBody
-    String insert() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.now();
-        String dateTimeStr = formatter.format(date);
-
-        String jsonString = DataRequest.request(DataRequest.STATISICS, "&date=" + dateTimeStr);
-        NcovCity ncovCity = JSON.parseObject(jsonString, NcovCity.class);
-        for (NcovCity.News p : ncovCity.getNewsList()) {
-            provinceService.insertProvince(p,date);
-        }
-        return "ok";
-    }
-
 }
