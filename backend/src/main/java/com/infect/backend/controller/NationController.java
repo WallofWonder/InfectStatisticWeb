@@ -16,9 +16,14 @@ public class NationController {
     @Resource(name = "nationServiceImpl")
     NationService nationService;
 
+    /**
+     * 获取全国疫情数据
+     *
+     * @return
+     */
     @GetMapping("/all")
     @ResponseBody
-    NationVO getNation(){
+    NationVO getNation() {
         return nationService.select();
     }
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.infect.backend.dao.ProvinceDao">
   <resultMap id="BaseResultMap" type="com.infect.backend.model.ProvincePO">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="date" jdbcType="DATE" property="date" />
     <result column="provinceShortName" jdbcType="VARCHAR" property="provinceshortname" />
     <result column="currentConfirmedCount" jdbcType="INTEGER" property="currentconfirmedcount" />
     <result column="confirmedCount" jdbcType="INTEGER" property="confirmedcount" />
@@ -107,7 +107,7 @@
     insert into province (`date`, provinceShortName, currentConfirmedCount, 
       confirmedCount, suspectedCount, curedCount, 
       deadCount)
-    values (#{date,jdbcType=TIMESTAMP}, #{provinceshortname,jdbcType=VARCHAR}, #{currentconfirmedcount,jdbcType=INTEGER}, 
+    values (#{date,jdbcType=DATE}, #{provinceshortname,jdbcType=VARCHAR}, #{currentconfirmedcount,jdbcType=INTEGER}, 
       #{confirmedcount,jdbcType=INTEGER}, #{suspectedcount,jdbcType=INTEGER}, #{curedcount,jdbcType=INTEGER}, 
       #{deadcount,jdbcType=INTEGER})
   </insert>
@@ -138,7 +138,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="date != null">
-        #{date,jdbcType=TIMESTAMP},
+        #{date,jdbcType=DATE},
       </if>
       <if test="provinceshortname != null">
         #{provinceshortname,jdbcType=VARCHAR},
@@ -173,7 +173,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.date != null">
-        `date` = #{record.date,jdbcType=TIMESTAMP},
+        `date` = #{record.date,jdbcType=DATE},
       </if>
       <if test="record.provinceshortname != null">
         provinceShortName = #{record.provinceshortname,jdbcType=VARCHAR},
@@ -201,7 +201,7 @@
   <update id="updateByExample" parameterType="map">
     update province
     set id = #{record.id,jdbcType=INTEGER},
-      `date` = #{record.date,jdbcType=TIMESTAMP},
+      `date` = #{record.date,jdbcType=DATE},
       provinceShortName = #{record.provinceshortname,jdbcType=VARCHAR},
       currentConfirmedCount = #{record.currentconfirmedcount,jdbcType=INTEGER},
       confirmedCount = #{record.confirmedcount,jdbcType=INTEGER},
@@ -216,7 +216,7 @@
     update province
     <set>
       <if test="date != null">
-        `date` = #{date,jdbcType=TIMESTAMP},
+        `date` = #{date,jdbcType=DATE},
       </if>
       <if test="provinceshortname != null">
         provinceShortName = #{provinceshortname,jdbcType=VARCHAR},
@@ -241,7 +241,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.infect.backend.model.ProvincePO">
     update province
-    set `date` = #{date,jdbcType=TIMESTAMP},
+    set `date` = #{date,jdbcType=DATE},
       provinceShortName = #{provinceshortname,jdbcType=VARCHAR},
       currentConfirmedCount = #{currentconfirmedcount,jdbcType=INTEGER},
       confirmedCount = #{confirmedcount,jdbcType=INTEGER},
