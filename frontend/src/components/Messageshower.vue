@@ -11,7 +11,7 @@
 <script>
     export default {
         name: "messageshower",
-        props: ['title', 'sum', 'changenum', 'styles']
+        props: ['title', 'sum', 'changenum', 'styles', 'time']
     }
 </script>
 

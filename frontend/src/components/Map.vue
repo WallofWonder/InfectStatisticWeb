@@ -28,8 +28,10 @@
             this.getData('http://localhost:8888//statistics/provinces/currentconfirmed')
         },
         methods: {
+            //获取地图需要的数据，并且渲染地图
             getData (url) {
                 let that = this
+                that.myChart.hideLoading()
                 this.axios.get(url)
                     .then(function (response) {
                         let datas = response.data.provinces
@@ -49,10 +51,28 @@
                     that.mydata=[]
                 })
             },
+            //根据传入的省份，获取对应省份的相关数据
+            getProvinces(param) {
+                // this.axios.get('http://localhost:8888/cities/list/'+encodeURI(encodeURI(param.name)))
+                //     .then(function (response) {
+                //         console.log(response)
+                //     }), function (err) {
+                //     console.log(err)
+                // }
+                this.$router.push({
+                    path:'province',
+                    name: 'province',
+                    query: {
+                        name: param.name
+                    }
+                })
+            },
+            //提前设置关于地图的相关配置
             drawLine () {
                 let that = this
                 // 基于准备好的dom，初始化echarts实例
                 that.myChart = this.$echarts.init(document.getElementById('myChart'))
+                that.myChart.on('click', that.getProvinces)
                 // that.myChart.off('click')
                 // 设置相关参数
                 that.option = {
@@ -72,8 +92,9 @@
                     },
                     tooltip:{
                         trigger:'item',
-                        formatter: '{b}<br/>{c} 个'
+                        formatter: '地区:{b}<br/>确诊:{c} 个'
                     },
+
                     series: [{
                         x:'center',
                         y:'top',

@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Echarts from '../views/Echarts.vue'
-import dataTest from "../views/dataTest"
-import Home from "../views/Home";
+import Home from "../views/Home"
 
 Vue.use(VueRouter)
 
@@ -12,38 +10,29 @@ const routes = [
   //   name: 'Login',
   //   component: Login
   // },
-  // {
-  //   path: '/home',
-  //   name: 'Home',
-  //   component: Home,
-  //   children: [
-  //     {
-  //       path: 'list',
-  //       name: 'list',
-  //       component: () => import(/* webpackChunkName: "list" */ '../views/List.vue')
-  //     },
-  //     {
-  //       path: 'user',
-  //       name: 'user',
-  //       component: () => import(/* webpackChunkName: "user" */ '../views/User.vue')
-  //     }
-  //   ]
-  // },
   {
     path: '/',
-    name: 'home',
-    component: Home
-  },
-  {
-    path: '/dataTest',
-    name: 'dataTest',
-    component: dataTest
-  },
-  {
-    path: '/echarts',
-    name: 'Echarts',
-    component: Echarts
+    redirect: 'country',
+    name: 'Home',
+    component: Home,
+    children: [
+      {
+        path: 'country',
+        name: 'country',
+        component: () => import(/* webpackChunkName: "country" */ '../views/Country.vue')
+      },
+      {
+        path: 'province',
+        name: 'province',
+        component: () => import(/* webpackChunkName: "province" */ '../views/Province.vue')
+      }
+    ]
   }
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   component: Home
+  // },
 
   // {
   //   //   path: '/about',
