@@ -40,7 +40,7 @@ const routes = [
     component: dataTest
   },
   {
-    path: '/',
+    path: '/echarts',
     name: 'Echarts',
     component: Echarts
   }

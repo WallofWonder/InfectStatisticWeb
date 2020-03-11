@@ -1,9 +1,9 @@
 <template>
     <div>
         <el-col :span="8">
-            <div align="center" class="Title">{{title}}</div>
-            <div align="center" class="Sum" :style="styles">{{sum}}</div>
-            <div align="center">{{"昨日" + changenum}}</div>
+            <div align="center" class="Title sp">{{title}}</div>
+            <div align="center" class="Sum sp" :style="styles">{{sum}}</div>
+            <div align="center" class="sp">昨日<span :style="styles">{{changenum}}</span></div>
         </el-col>
     </div>
 </template>
@@ -16,8 +16,9 @@
 </script>
 
 <style scoped>
-    div {
-       padding: 2px;
+    .sp {
+       padding: 16px;
+        /*background: chartreuse;*/
     }
     .Title {
         font-size: 24px;
