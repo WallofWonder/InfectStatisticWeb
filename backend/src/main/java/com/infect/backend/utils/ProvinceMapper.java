@@ -1,7 +1,7 @@
 package com.infect.backend.utils;
 
-import com.infect.backend.model.NationVO;
-import com.infect.backend.model.NcovCity;
+import com.infect.backend.model.ProvinceMapVO;
+import com.infect.backend.entity.NcovCity;
 import com.infect.backend.model.ProvincePO;
 
 import java.time.LocalDate;
@@ -25,10 +25,10 @@ public class ProvinceMapper {
                 .build();
     }
 
-    public static NationVO mapToNationVO(List<ProvincePO> provincePOS, String type) {
-        NationVO nationVO = new NationVO();
+    public static ProvinceMapVO mapToNationVO(List<ProvincePO> provincePOS, String type) {
+        ProvinceMapVO provinceMapVO = new ProvinceMapVO();
         for (ProvincePO pp: provincePOS) {
-            NationVO.NationalProvinceVO npVO = new NationVO.NationalProvinceVO();
+            ProvinceMapVO.NationalProvinceVO npVO = new ProvinceMapVO.NationalProvinceVO();
             npVO.setName(pp.getProvinceshortname());
             if (type.equals("currentconfirmed")) {
                 npVO.setValue(pp.getCurrentconfirmedcount());
@@ -36,8 +36,8 @@ public class ProvinceMapper {
             else if(type.equals("confirmed")) {
                 npVO.setValue(pp.getConfirmedcount());
             }
-            nationVO.getProvinces().add(npVO);
+            provinceMapVO.getProvinces().add(npVO);
         }
-        return nationVO;
+        return provinceMapVO;
     }
 }

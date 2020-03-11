@@ -3,7 +3,7 @@ package com.infect.backend.service;
 import com.infect.backend.dao.CityDao;
 import com.infect.backend.model.CityPOExample;
 import com.infect.backend.model.CityVO;
-import com.infect.backend.model.NcovCity;
+import com.infect.backend.entity.NcovCity;
 import com.infect.backend.utils.CityMapper;
 import org.springframework.stereotype.Service;
 

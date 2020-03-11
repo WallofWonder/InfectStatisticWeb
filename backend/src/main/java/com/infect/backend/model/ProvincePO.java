@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
  * @author
  */
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ProvincePO implements Serializable {
     private Integer id;
 

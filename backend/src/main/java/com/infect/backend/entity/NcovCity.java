@@ -1,4 +1,4 @@
-package com.infect.backend.model;
+package com.infect.backend.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

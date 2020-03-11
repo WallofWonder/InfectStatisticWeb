@@ -3,13 +3,13 @@ package com.infect.backend.utils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class DataRequest {
 
-    private static final String KEY = "7d900b241b39bf06d81bfc22d476f3ce";
-    public static final String STATISICS = "http://api.tianapi.com/txapi/ncovcity/index";
+    private static final String API_KEY = "7d900b241b39bf06d81bfc22d476f3ce";
+    public static final String PROVINCE_AND_CITY_STATISICS = "http://api.tianapi.com/txapi/ncovcity/index";
+    public static final String NATION_STATISICS_AND_NEWS = "http://api.tianapi.com/txapi/ncov/index";
 
     /**
      * @param httpUrl 请求接口
@@ -20,7 +20,7 @@ public class DataRequest {
         BufferedReader reader = null;
         String result = null;
         StringBuffer sbf = new StringBuffer();
-        httpUrl = httpUrl + "?key=" + KEY + ((httpArg == null) ? "" : httpArg);
+        httpUrl = httpUrl + "?key=" + API_KEY + ((httpArg == null) ? "" : httpArg);
 
         try {
             URL url = new URL(httpUrl);
