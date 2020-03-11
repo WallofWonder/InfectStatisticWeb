@@ -15,4 +15,5 @@
 #### 接口说明
 - 各省累计确诊：localhost:8888//statistics/provinces/confirmed 
 - 各省现有确诊：localhost:8888//statistics/provinces/currentconfirmed
-- 某省所有城市疫情：localhost:8888/cities/list/{省名拼音}
+- 某省所有城市疫情：localhost:8888/cities/list/{省名}
+- 全国数据：localhost:8888/nations/all

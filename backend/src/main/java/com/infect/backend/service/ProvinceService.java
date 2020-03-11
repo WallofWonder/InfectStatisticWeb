@@ -1,16 +1,15 @@
 package com.infect.backend.service;
 
-import com.infect.backend.model.NationVO;
-import com.infect.backend.model.NcovCity;
+import com.infect.backend.model.ProvinceMapVO;
+import com.infect.backend.entity.NcovCity;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public interface ProvinceService {
 
     int insertProvince(NcovCity.News province, LocalDate date);
 
-    NationVO getNationalProvince(LocalDate date, String type);
+    ProvinceMapVO getNationalProvince(LocalDate date, String type);
 
     Long countDate(LocalDate date);
 }

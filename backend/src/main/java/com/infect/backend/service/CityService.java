@@ -1,7 +1,7 @@
 package com.infect.backend.service;
 
 import com.infect.backend.model.CityVO;
-import com.infect.backend.model.NcovCity;
+import com.infect.backend.entity.NcovCity;
 
 import java.time.LocalDate;
 import java.util.List;

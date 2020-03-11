@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 @Controller
@@ -21,8 +23,8 @@ public class CityController {
 
     @GetMapping("list/{province}")
     @ResponseBody
-    public List<CityVO> getCities(@PathVariable String province) {
-
-        return cityService.selectCities((String) CityMapper.citiesPY.get(province));
+    public List<CityVO> getCities(@PathVariable String province) throws UnsupportedEncodingException {
+        String p = URLDecoder.decode(URLDecoder.decode(province, "UTF-8"), "UTF-8");
+        return cityService.selectCities(p);
     }
 }

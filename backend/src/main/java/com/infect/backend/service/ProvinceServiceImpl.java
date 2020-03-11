@@ -1,8 +1,8 @@
 package com.infect.backend.service;
 
 import com.infect.backend.dao.ProvinceDao;
-import com.infect.backend.model.NationVO;
-import com.infect.backend.model.NcovCity;
+import com.infect.backend.model.ProvinceMapVO;
+import com.infect.backend.entity.NcovCity;
 import com.infect.backend.model.ProvincePOExample;
 import com.infect.backend.utils.ProvinceMapper;
 import org.dozer.Mapper;
@@ -30,7 +30,7 @@ public class ProvinceServiceImpl implements ProvinceService {
     }
 
     @Override
-    public NationVO getNationalProvince(LocalDate date, String type) {
+    public ProvinceMapVO getNationalProvince(LocalDate date, String type) {
         ProvincePOExample example = new ProvincePOExample();
         ProvincePOExample.Criteria criteria = example.createCriteria();
         ZonedDateTime zonedDateTime = date.atStartOfDay(ZoneId.systemDefault());

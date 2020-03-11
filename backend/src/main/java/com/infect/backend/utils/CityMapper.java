@@ -2,7 +2,7 @@ package com.infect.backend.utils;
 
 import com.infect.backend.model.CityPO;
 import com.infect.backend.model.CityVO;
-import com.infect.backend.model.NcovCity;
+import com.infect.backend.entity.NcovCity;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.sql.Date;
