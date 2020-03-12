@@ -1,12 +1,16 @@
 <template>
     <div>
         <el-row>
-            <el-col  :offset="10" class="tg">
-                <el-button @click="getData('http://localhost:8888//statistics/provinces/currentconfirmed')">现有确诊</el-button>
-                <el-button @click="getData('http://localhost:8888//statistics/provinces/confirmed')">累计确诊</el-button>
-            </el-col>
-            <el-col :offset="4">
-                <div id="myChart" :style="{width:'1280px',height:'960px'}"></div>
+            <div align="center">
+                <el-col  class="tg">
+                    <el-button @click="getData('http://localhost:8888//statistics/provinces/currentconfirmed')">现有确诊</el-button>
+                    <el-button @click="getData('http://localhost:8888//statistics/provinces/confirmed')">累计确诊</el-button>
+                </el-col>
+            </div>
+            <el-col>
+                <div align="center">
+                    <div id="myChart" :style="{width:'1280px',height:'960px'}"></div>
+                </div>
             </el-col>
         </el-row>
     </div>

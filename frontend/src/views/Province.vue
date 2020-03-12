@@ -1,23 +1,79 @@
 <template>
     <div>
-        <echart></echart>
+        <div>{{province}}</div>
+        <div class="round">
+            <el-row>
+                <messageshower  v-for="(item,index) in message" :key="index" :title="item.title" :sum="item.num" :changenum="item.changenum" :styles="Styles[index]" :span="6">
+                </messageshower>
+            </el-row>
+        </div>
+        <div align="center">
+            <echart :province="province"></echart>
+        </div>
         <button @click="showMes">测试是否收到数据</button>
     </div>
 </template>
 
 <script>
     import echart from "../components/Echart";
+    import messageshower from "../components/Messageshower";
     export default {
         name: "Province",
-        components: { echart },
+        components: { echart,messageshower },
+        data () {
+            return {
+                message: [
+                    { title: '现有确诊', num: 10, changenum: 5},
+                    { title: '累计确诊', num: 10, changenum: 5},
+                    { title: '累计治愈', num: 10, changenum: 5},
+                    { title: '累计死亡', num: 10, changenum: 5}
+                ],
+                Styles: [
+                    { color: '#ff6a57' },
+                    { color: '#e83132' },
+                    { color: '#20b3ba' },
+                    { color: '#101010' },
+                ],
+                province: this.$route.query.name
+            }
+        },
+        mounted() {
+            this.getData('http://localhost:8888/statistics/provinces/one/')
+        },
         methods: {
+            getData (url) {
+                let that = this
+                this.axios.get(url + encodeURI(encodeURI(that.province)))
+                    .then(function (response) {
+                        let datas=response.data
+                        that.message[0].num=datas.currentConfirmedCount
+                        that.message[0].changenum=datas.currentconfirmedincr
+                        that.message[1].num=datas.confirmedCount
+                        that.message[1].changenum=datas.confirmedincr
+                        that.message[2].num=datas.curedCount
+                        that.message[2].changenum=datas.curedincr
+                        that.message[3].num=datas.deadCount
+                        that.message[3].changenum=datas.deadincr
+                        for(var i=0;i<that.message.length;++i){
+                            if(that.message[i].changenum>0){
+                                that.message[i].changenum='+'+that.message[i].changenum
+                            }
+                        }
+                        console.log(datas)
+                    }, function (err) {
+                        console.log(err)
+                    })
+            },
             showMes () {
-                console.log(this.$route.query.name)
+                console.log(this.province)
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .round {
+        border-radius: 20px;
+        background: aliceblue;
+    }
 </style>
