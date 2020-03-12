@@ -1,5 +1,16 @@
 <template>
-    <div id="myChart" :style="{width:'1280px',height:'720px'}"></div>
+    <div>
+        <el-row>
+            <div id="myChart" :style="{width:'1280px',height:'720px'}"></div>
+        </el-row>
+        <el-row>
+            <div align="center">
+                <el-button @click="getData(currentUrl)">新增确诊趋势</el-button>
+                <el-button @click="getData(confirmedUrl)">累计确诊趋势</el-button>
+                <el-button @click="getData(cureddeadUrl)">累计治愈/死亡</el-button>
+            </div>
+        </el-row>
+    </div>
 </template>
 
 <script>
@@ -10,61 +21,76 @@
                 mydata: [],
                 myChart: '',
                 option: '',
+                legend:[],
+                xdata:[],
+                series:[],
+                currentUrl: 'http://localhost:8888/statistics/provinces/one/tends/'+encodeURI(encodeURI(this.province))+'/currentConfirmed',
+                confirmedUrl: 'http://localhost:8888/statistics/provinces/one/tends/'+encodeURI(encodeURI(this.province))+'/confirmed',
+                cureddeadUrl: 'http://localhost:8888/statistics/provinces/one/tends/'+encodeURI(encodeURI(this.province))+'/cureddead'
             }
         },
         props: ['province'],
         mounted () {
             this.drawLine()
-            // this.getData('http://localhost:8888/statistics/provinces/one/')
+            this.getData(this.cureddeadUrl)
         },
-
         methods: {
             getData (url) {
                 let that = this
-                this.axios.get(url + encodeURI(encodeURI(that.province)))
+                this.axios.get(url)
                     .then(function (response) {
                         // return response.data.provinces
-                        console.log(response)
-                        // let datas = response.data.provinces
-                        // for(var i=0;i<datas.length;++i){
-                        //     that.mydata.push({
-                        //         name: datas[i].name,
-                        //         value: datas[i].value
-                        //     })
-                        // }
-                        // that.myChart.setOption(that.option)
+                        let datas = response.data
+                        for(var i=0;i<datas.dates.length;++i){
+                            that.xdata.push(datas.dates[i])
+                        }
+                        let sseries =response.data.series
+                        for(var j=0;j<sseries.length;++j){
+                            that.legend.push(sseries[j].name)
+                            that.series.push({
+                                name: sseries[j].name,
+                                data: sseries[j].data,
+                                type: 'line',
+                                smooth: true
+                            })
+                        }
+                        that.drawLine()
+                        that.myChart.setOption(that.option)
                     }, function (err) {
                         console.log(err)
-                    })
+                    }).finally(function () {
+                        //清空原有数据，防止再次渲染图表时数据堆叠
+                        that.xdata=[]
+                        that.legend=[]
+                        that.series=[]
+                })
             },
             drawLine () {
                 let that = this
                 // 基于准备好的dom，初始化echarts实例
                 that.myChart = this.$echarts.init(document.getElementById('myChart'))
+                //销毁原有图表，防止数据残留污染画布
+                that.myChart.dispose()
+                that.myChart = this.$echarts.init(document.getElementById('myChart'))
                 // 设置相关参数
                 that.option = {
                     backgroundColor: 'transparent',
                     legend: {
-                        data: ['治愈']
+                        data: that.legend
                     },
                     tooltip: {
                         trigger: 'axis'
                     },
                     xAxis: {
                         type: 'category',
-                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                        data: that.xdata
                     },
                     yAxis: {
                         type: 'value'
                     },
-                    series: [{
-                        name: '治愈',
-                        data: ['190', '760', '330', '530', '193', '336', '997'],
-                        type: 'line',
-                        smooth: true
-                    }]
+                    series: that.series
             }
-            that.myChart.setOption(that.option)
+            // that.myChart.setOption(that.option)
             }
         }
     }
