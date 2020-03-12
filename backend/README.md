@@ -15,8 +15,9 @@
 - 在浏览器输入localhost:8888/hello，若返回一个json格式的helloworld数据，则说明运行成功
 
 #### 接口说明
-- 各省累计确诊：localhost:8888//statistics/provinces/confirmed 
-- 各省现有确诊：localhost:8888//statistics/provinces/currentconfirmed
-- 某省所有城市疫情：localhost:8888/cities/list/{省名}
-- 全国数据：localhost:8888/nations/all
-- 某省疫情数据：localhost:8888/statistics/provinces/one/{省名}
+- 全国当日数据：localhost:8888/nations/all
+- 各省当日累计确诊：localhost:8888/statistics/provinces/confirmed 
+- 各省当日现有确诊：localhost:8888/statistics/provinces/currentconfirmed
+- 某省当日疫情数据：localhost:8888/statistics/provinces/one/{省名}
+- 某省当日所有城市疫情：localhost:8888/cities/list/{省名}
+- 某省疫情趋势：localhost:8888/statistics/provinces/one/tends/{省名}

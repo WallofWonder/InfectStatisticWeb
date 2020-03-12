@@ -2,8 +2,10 @@ package com.infect.backend.controller;
 
 import com.infect.backend.model.ProvinceDataVO;
 import com.infect.backend.model.ProvinceMapVO;
+import com.infect.backend.model.ProvinceTendencyVO;
 import com.infect.backend.model.ProvinceVO;
 import com.infect.backend.service.ProvinceService;
+import com.infect.backend.utils.ProvinceMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +16,7 @@ import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/statistics")
-public class StatisticController {
+public class ProvinceController {
 
     @Resource(name = "provinceServiceImpl")
     ProvinceService provinceService;
@@ -42,5 +44,19 @@ public class StatisticController {
     ProvinceVO getProvince(@PathVariable String province) throws UnsupportedEncodingException {
         String decodedName = URLDecoder.decode(URLDecoder.decode(province, "UTF-8"), "UTF-8");
         return provinceService.selectByNameAndDate(decodedName, LocalDate.now());
+    }
+
+    /**
+     * 获取某省疫情趋势
+     *
+     * @param province URL编码后的省名称
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    @GetMapping("/provinces/one/tends/{province}")
+    @ResponseBody
+    ProvinceTendencyVO getTendency(@PathVariable String province) throws UnsupportedEncodingException {
+        String decodedName = URLDecoder.decode(URLDecoder.decode(province, "UTF-8"), "UTF-8");
+        return ProvinceMapper.mapToTendency(provinceService.selectByName(decodedName));
     }
 }

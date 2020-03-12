@@ -2,9 +2,11 @@ package com.infect.backend.service;
 
 import com.infect.backend.model.ProvinceMapVO;
 import com.infect.backend.entity.NcovCity;
+import com.infect.backend.model.ProvincePO;
 import com.infect.backend.model.ProvinceVO;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface ProvinceService {
 
@@ -15,4 +17,6 @@ public interface ProvinceService {
     Long countDate(LocalDate date);
 
     ProvinceVO selectByNameAndDate(String provinceShortName, LocalDate date);
+
+    List<ProvincePO> selectByName(String provinceShortName);
 }

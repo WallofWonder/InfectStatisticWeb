@@ -63,10 +63,7 @@ public class ProvinceServiceImpl implements ProvinceService {
         List<ProvincePO> pos = provinceDao.selectByExample(example);
 
         ProvincePO poToday = pos.get(0);
-        System.out.println(poToday.getDate());
-
         ProvincePO poYesterday = pos.get(1);
-        System.out.println(poYesterday.getDate());
 
         ProvinceVO vo = dozerMapper.map(poToday, ProvinceVO.class);
 
@@ -76,5 +73,19 @@ public class ProvinceServiceImpl implements ProvinceService {
         vo.setDeadincr(poToday.getDeadcount() - poYesterday.getDeadcount());
 
         return vo;
+    }
+
+    @Override
+    public List<ProvincePO> selectByName(String provinceShortName) {
+        LocalDate thisDayLastMon = LocalDate.now().minusMonths(1);
+        ZonedDateTime zonedDateTime = thisDayLastMon.atStartOfDay(ZoneId.systemDefault());
+
+        ProvincePOExample example = new ProvincePOExample();
+        ProvincePOExample.Criteria criteria = example.createCriteria();
+        criteria.andProvinceshortnameEqualTo(provinceShortName)
+                .andDateGreaterThanOrEqualTo(java.util.Date.from(zonedDateTime.toInstant()));
+        example.setOrderByClause("date ASC");
+
+        return provinceDao.selectByExample(example);
     }
 }

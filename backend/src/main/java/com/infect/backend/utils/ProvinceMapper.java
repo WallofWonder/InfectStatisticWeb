@@ -3,7 +3,9 @@ package com.infect.backend.utils;
 import com.infect.backend.model.ProvinceMapVO;
 import com.infect.backend.entity.NcovCity;
 import com.infect.backend.model.ProvincePO;
+import com.infect.backend.model.ProvinceTendencyVO;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -27,17 +29,34 @@ public class ProvinceMapper {
 
     public static ProvinceMapVO mapToNationVO(List<ProvincePO> provincePOS, String type) {
         ProvinceMapVO provinceMapVO = new ProvinceMapVO();
-        for (ProvincePO pp: provincePOS) {
+        for (ProvincePO pp : provincePOS) {
             ProvinceMapVO.NationalProvinceVO npVO = new ProvinceMapVO.NationalProvinceVO();
             npVO.setName(pp.getProvinceshortname());
             if (type.equals("currentconfirmed")) {
                 npVO.setValue(pp.getCurrentconfirmedcount());
-            }
-            else if(type.equals("confirmed")) {
+            } else if (type.equals("confirmed")) {
                 npVO.setValue(pp.getConfirmedcount());
             }
             provinceMapVO.getProvinces().add(npVO);
         }
         return provinceMapVO;
+    }
+
+    public static ProvinceTendencyVO mapToTendency(List<ProvincePO> pos) {
+        ProvinceTendencyVO pTVo = new ProvinceTendencyVO();
+        pTVo.getCurrentConfirmed().setName("现有确诊");
+        pTVo.getConfirmed().setName("累计确诊");
+        pTVo.getCured().setName("治愈");
+        pTVo.getDead().setName("死亡");
+
+        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd");
+        for (ProvincePO po : pos) {
+            pTVo.getDates().add(formatter.format(po.getDate()));
+            pTVo.getCurrentConfirmed().getData().add(po.getCurrentconfirmedcount());
+            pTVo.getConfirmed().getData().add(po.getConfirmedcount());
+            pTVo.getCured().getData().add(po.getCuredcount());
+            pTVo.getDead().getData().add(po.getDeadcount());
+        }
+        return pTVo;
     }
 }
