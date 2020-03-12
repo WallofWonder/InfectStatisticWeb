@@ -41,6 +41,6 @@ class DataRequestTest {
     @Test
     void selectByNameTest() {
         List<ProvincePO> pos = provinceService.selectByName("湖北");
-        System.out.println(ProvinceMapper.mapToTendency(pos));
+        System.out.println(ProvinceMapper.mapToTendency(pos, "currentConfirmed"));
     }
 }

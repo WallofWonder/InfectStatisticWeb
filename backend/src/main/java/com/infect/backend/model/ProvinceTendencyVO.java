@@ -15,10 +15,7 @@ import java.util.List;
 public class ProvinceTendencyVO {
 
     List<String> dates = new ArrayList<>();
-    Serie currentConfirmed = new Serie();
-    Serie confirmed = new Serie();
-    Serie cured = new Serie();
-    Serie dead = new Serie();
+    List<Serie> series = new ArrayList<>();
 
     @Data
     @NoArgsConstructor

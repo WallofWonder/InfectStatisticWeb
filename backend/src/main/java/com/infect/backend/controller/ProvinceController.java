@@ -1,6 +1,5 @@
 package com.infect.backend.controller;
 
-import com.infect.backend.model.ProvinceDataVO;
 import com.infect.backend.model.ProvinceMapVO;
 import com.infect.backend.model.ProvinceTendencyVO;
 import com.infect.backend.model.ProvinceVO;
@@ -50,13 +49,15 @@ public class ProvinceController {
      * 获取某省疫情趋势
      *
      * @param province URL编码后的省名称
+     * @param type     数据类型
      * @return
      * @throws UnsupportedEncodingException
      */
-    @GetMapping("/provinces/one/tends/{province}")
+    @GetMapping("/provinces/one/tends/{province}/{type}")
     @ResponseBody
-    ProvinceTendencyVO getTendency(@PathVariable String province) throws UnsupportedEncodingException {
+    ProvinceTendencyVO getTendency(@PathVariable String province, @PathVariable String type)
+            throws UnsupportedEncodingException {
         String decodedName = URLDecoder.decode(URLDecoder.decode(province, "UTF-8"), "UTF-8");
-        return ProvinceMapper.mapToTendency(provinceService.selectByName(decodedName));
+        return ProvinceMapper.mapToTendency(provinceService.selectByName(decodedName), type);
     }
 }
