@@ -58,26 +58,23 @@ public class ScheduledJob {
     /**
      * 更新近20天省疫情数据
      */
-    public void updateProvinceData() {
+    private void updateProvinceData() {
 
         log.info("--------------------------- >> 更新各省疫情数据...");
         LocalDate date = LocalDate.now();
 
         for (int i = 0; i < 21; i++) {
             LocalDate datet = LocalDate.now().minusDays(i);
-            String dateTimeStr = formatter.format(datet);
-            String jsonString = DataRequest.request(DataRequest.PROVINCE_AND_CITY_STATISICS,
-                    "&date=" + dateTimeStr, i % 3);
-            NcovCity ncovCity = JSON.parseObject(jsonString, NcovCity.class);
-            for (NcovCity.News p : ncovCity.getNewsList()) {
-                if (provinceService.exists(p.getProvinceShortName(), datet)) {
-                    provinceService.update(p, datet);
-                }
-                else {
+            if (provinceService.countDate(date) == 0L) {
+                String dateTimeStr = formatter.format(datet);
+                String jsonString = DataRequest.request(DataRequest.PROVINCE_AND_CITY_STATISICS,
+                        "&date=" + dateTimeStr, i % 3);
+                NcovCity ncovCity = JSON.parseObject(jsonString, NcovCity.class);
+                for (NcovCity.News p : ncovCity.getNewsList()) {
                     provinceService.insertProvince(p, datet);
                 }
+                log.info("已获取 " + dateTimeStr + " 数据");
             }
-            log.info("已获取 " + dateTimeStr + " 数据");
         }
         log.info("--------------------------- >> 各省疫情数据更新完成。");
     }
@@ -85,7 +82,7 @@ public class ScheduledJob {
     /**
      * 更新当前各省数据
      */
-    public void updateProvinceDataToday() {
+    private void updateProvinceDataToday() {
         log.info("--------------------------- >> 更新当前各省疫情数据...");
         LocalDate date = LocalDate.now();
         String dateTimeStr = formatter.format(date);
@@ -101,7 +98,7 @@ public class ScheduledJob {
     /**
      * 更新当前城市疫情数据
      */
-    public void upadateCityData() {
+    private void upadateCityData() {
         log.info("--------------------------- >> 更新全国城市疫情数据...");
         LocalDate date = LocalDate.now();
 
@@ -124,7 +121,7 @@ public class ScheduledJob {
     /**
      * 更新全国疫情数据
      */
-    public void updateNationData() {
+    private void updateNationData() {
         log.info("--------------------------- >> 更新全国疫情数据...");
         LocalDate date = LocalDate.now();
         String dateTimeStr = formatter.format(date);
