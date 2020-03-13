@@ -18,7 +18,6 @@
 <style scoped>
     .sp {
        padding: 16px;
-        /*background: chartreuse;*/
     }
     .Title {
         font-size: 24px;

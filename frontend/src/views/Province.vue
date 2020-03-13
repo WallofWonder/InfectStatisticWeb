@@ -71,13 +71,6 @@
 </script>
 
 <style scoped>
-    .round {
-        border-radius: 20px;
-        background: aliceblue;
-    }
-    .tg {
-        margin-top: 20px;
-    }
     .P {
         font-size: 32px;
         margin-left: 5%;

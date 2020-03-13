@@ -1,33 +1,34 @@
 <template>
-    <div>
+    <div :style="{ width:'auto' }">
         <el-table
                 :data="tableData"
                 style="width: 100%"
-                :header-cell-style="{ background:'#eef1f6',color:'#606266' }" >
+                :header-cell-style="{ background:'#eef1f6',color:'#606266' }"
+                >
             <el-table-column
                     prop="cityname"
                     label="城市"
-                    width="120">
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="currentconfirmedcount"
-                    label="新增感染"
-                    width="120">
+                    label="现有确诊"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="confirmedcount"
-                    label="累计感染"
-                    width="120">
+                    label="累计确诊"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="curedcount"
                     label="累计治愈"
-                    width="120">
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="deadcount"
                     label="累计死亡"
-                    width="120">
+                    align="center">
             </el-table-column>
         </el-table>
     </div>

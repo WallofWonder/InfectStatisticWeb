@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="round tg">
         <el-row>
             <div align="center">
                 <el-col  class="tg">
@@ -9,7 +9,7 @@
             </div>
             <el-col>
                 <div align="center">
-                    <div id="myChart" :style="{width:'1280px',height:'960px'}"></div>
+                    <div id="myChart" :style="{width:'auto',height:'561px'}"></div>
                 </div>
             </el-col>
         </el-row>
@@ -35,7 +35,7 @@
             //获取地图需要的数据，并且渲染地图
             getData (url) {
                 let that = this
-                that.myChart.hideLoading()
+
                 this.axios.get(url)
                     .then(function (response) {
                         let datas = response.data.provinces
@@ -49,6 +49,7 @@
                         //重要步骤，再次初始化option以刷新数据
                         that.drawLine()
                         that.myChart.setOption(that.option)
+                        that.myChart.hideLoading()
                     }, function (err) {
                         console.log(err)
                     }).finally(function () {
@@ -71,14 +72,15 @@
                 let that = this
                 // 基于准备好的dom，初始化echarts实例
                 that.myChart = this.$echarts.init(document.getElementById('myChart'))
+                that.myChart.showLoading()
                 that.myChart.on('click', that.getProvinces)
                 // that.myChart.off('click')
                 // 设置相关参数
                 that.option = {
-                    backgroundColor:'aliceblue',
+                    // backgroundColor:'aliceblue',
                     dataRange: {
-                        x: 'left',
-                        y: '70%',
+                        x: '5%',
+                        y: '60%',
                         splitList: [
                             {start: 10000},
                             {start: 1000, end: 9999},
@@ -117,7 +119,5 @@
 </script>
 
 <style scoped>
-    .tg {
-        padding-top: 30px;
-    }
+
 </style>

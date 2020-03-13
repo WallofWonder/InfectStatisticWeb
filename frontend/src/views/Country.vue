@@ -58,7 +58,7 @@
                         that.message[3].num=datas.confirmedcount
                         that.message[3].changenum=datas.confirmedincr
                         that.message[4].num=datas.curedcount
-                        that.message[4].changenumnum=datas.curedincr
+                        that.message[4].changenum=datas.curedincr
                         that.message[5].num=datas.deadcount
                         that.message[5].changenum=datas.deadincr
                         for(var i=0;i<that.message.length;++i){
@@ -75,8 +75,5 @@
 </script>
 
 <style scoped>
-    .round {
-        border-radius: 20px;
-        background: aliceblue;
-    }
+
 </style>
