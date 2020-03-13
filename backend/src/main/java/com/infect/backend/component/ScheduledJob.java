@@ -102,19 +102,18 @@ public class ScheduledJob {
         log.info("--------------------------- >> 更新全国城市疫情数据...");
         LocalDate date = LocalDate.now();
 
-        if (cityService.countDate(date) == 0L) {
-            cityService.truncate();
-            String dateTimeStr = formatter.format(date);
-            String jsonString = DataRequest.request(DataRequest.PROVINCE_AND_CITY_STATISICS,
-                    "&date=" + dateTimeStr, 0);
-            NcovCity ncovCity = JSON.parseObject(jsonString, NcovCity.class);
-            for (NcovCity.News p : ncovCity.getNewsList()) {
-                for (NcovCity.News.City city : p.getCities()) {
-                    cityService.insertCity(city, date, p.getProvinceShortName());
-                }
+        cityService.truncate();
+        String dateTimeStr = formatter.format(date);
+        String jsonString = DataRequest.request(DataRequest.PROVINCE_AND_CITY_STATISICS,
+                "&date=" + dateTimeStr, 0);
+        NcovCity ncovCity = JSON.parseObject(jsonString, NcovCity.class);
+        for (NcovCity.News p : ncovCity.getNewsList()) {
+            for (NcovCity.News.City city : p.getCities()) {
+                cityService.insertCity(city, date, p.getProvinceShortName());
             }
-            log.info("已获取 " + dateTimeStr + " 数据");
         }
+        log.info("已获取 " + dateTimeStr + " 数据");
+
         log.info("--------------------------- >> 全国城市疫情数据更新完成。");
     }
 
