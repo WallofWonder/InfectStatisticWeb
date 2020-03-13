@@ -52,7 +52,6 @@
                 this.axios.get(url+encodeURI(encodeURI(that.province)))
                     .then(function (response) {
                         let datas = response.data
-                        console.log(datas)
                         for(var i=0;i<datas.length;++i){
                             that.tableData.push({
                                 cityname: datas[i].cityname,
