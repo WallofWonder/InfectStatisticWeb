@@ -1,7 +1,7 @@
 package com.infect.backend.service;
 
-import com.infect.backend.model.ProvinceMapVO;
 import com.infect.backend.entity.NcovCity;
+import com.infect.backend.model.ProvinceMapVO;
 import com.infect.backend.model.ProvincePO;
 import com.infect.backend.model.ProvinceVO;
 
@@ -19,4 +19,8 @@ public interface ProvinceService {
     ProvinceVO selectByNameAndDate(String provinceShortName, LocalDate date);
 
     List<ProvincePO> selectByName(String provinceShortName);
+
+    int update(NcovCity.News province, LocalDate date);
+
+    Boolean exists(String provinceShortName, LocalDate date);
 }
