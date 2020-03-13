@@ -64,14 +64,14 @@ public class ScheduledJob {
         LocalDate date = LocalDate.now();
 
         for (int i = 0; i < 21; i++) {
-            LocalDate datet = LocalDate.now().minusDays(i);
-            if (provinceService.countDate(date) == 0L) {
-                String dateTimeStr = formatter.format(datet);
+            LocalDate dateFormer = LocalDate.now().minusDays(i);
+            if (provinceService.countDate(dateFormer) == 0L) {
+                String dateTimeStr = formatter.format(dateFormer);
                 String jsonString = DataRequest.request(DataRequest.PROVINCE_AND_CITY_STATISICS,
                         "&date=" + dateTimeStr, i % 3);
                 NcovCity ncovCity = JSON.parseObject(jsonString, NcovCity.class);
                 for (NcovCity.News p : ncovCity.getNewsList()) {
-                    provinceService.insertProvince(p, datet);
+                    provinceService.insertProvince(p, dateFormer);
                 }
                 log.info("已获取 " + dateTimeStr + " 数据");
             }
