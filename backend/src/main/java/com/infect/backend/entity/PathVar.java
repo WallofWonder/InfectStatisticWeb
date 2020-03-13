@@ -8,5 +8,5 @@ import java.util.List;
 public abstract class PathVar {
     public abstract List<ProvinceTendencyVO.Serie> getSeries();
 
-    public abstract void insertData(ProvinceTendencyVO pTVO, ProvincePO po);
+    public abstract void insertData(ProvinceTendencyVO pTVO, ProvincePO po, ProvincePO poYesterday);
 }

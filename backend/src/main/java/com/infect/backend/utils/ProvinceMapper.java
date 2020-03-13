@@ -1,9 +1,9 @@
 package com.infect.backend.utils;
 
+import com.infect.backend.entity.NcovCity;
 import com.infect.backend.entity.PathVar;
 import com.infect.backend.entity.PathVarFactory;
 import com.infect.backend.model.ProvinceMapVO;
-import com.infect.backend.entity.NcovCity;
 import com.infect.backend.model.ProvincePO;
 import com.infect.backend.model.ProvinceTendencyVO;
 
@@ -53,9 +53,15 @@ public class ProvinceMapper {
         pTVo.setSeries(pathVar.getSeries());
 
         SimpleDateFormat formatter = new SimpleDateFormat("MM-dd");
+        ProvincePO poFormer = pos.get(0);
+
         for (ProvincePO po : pos) {
+            if (po.equals(poFormer)) {
+                continue;
+            }
             pTVo.getDates().add(formatter.format(po.getDate()));
-            pathVar.insertData(pTVo, po);
+            pathVar.insertData(pTVo, po, poFormer);
+            poFormer = po;
         }
         return pTVo;
     }

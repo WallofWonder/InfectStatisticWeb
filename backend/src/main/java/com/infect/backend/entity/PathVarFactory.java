@@ -1,11 +1,9 @@
 package com.infect.backend.entity;
 
-import com.infect.backend.model.ProvinceTendencyVO;
-
 public class PathVarFactory {
     public static PathVar makePathVar(String name) {
-        if (name.equals("currentConfirmed")) {
-            return new CurrentConfirmedPathVar();
+        if (name.equals("confirmedincr")) {
+            return new ConfirmedIncrPathVar();
         }
         else if (name.equals("confirmed")) {
             return new ConfirmedPathVar();

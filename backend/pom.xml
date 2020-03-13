@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.infect</groupId>
-    <artifactId>backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>InfectStatisticWeb-backend</artifactId>
+    <version>1.0.0</version>
     <name>backend</name>
     <description>infectStatistic project for Spring Boot</description>
 

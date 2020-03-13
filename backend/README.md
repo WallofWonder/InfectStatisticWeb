@@ -21,3 +21,7 @@
 - 某省当日疫情数据：localhost:8888/statistics/provinces/one/{省名}
 - 某省当日所有城市疫情：localhost:8888/cities/list/{省名}
 - 某省疫情趋势：localhost:8888/statistics/provinces/one/tends/{省名}/{类型}
+{类型}参数值：
+    - confirmedincr —— 新增确诊趋势 
+    - confirmed —— 现有确诊趋势
+    - cureddead —— 治愈/死亡趋势

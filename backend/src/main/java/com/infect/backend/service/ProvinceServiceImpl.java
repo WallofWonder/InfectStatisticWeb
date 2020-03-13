@@ -1,8 +1,8 @@
 package com.infect.backend.service;
 
 import com.infect.backend.dao.ProvinceDao;
-import com.infect.backend.model.ProvinceMapVO;
 import com.infect.backend.entity.NcovCity;
+import com.infect.backend.model.ProvinceMapVO;
 import com.infect.backend.model.ProvincePO;
 import com.infect.backend.model.ProvincePOExample;
 import com.infect.backend.model.ProvinceVO;
@@ -77,7 +77,7 @@ public class ProvinceServiceImpl implements ProvinceService {
 
     @Override
     public List<ProvincePO> selectByName(String provinceShortName) {
-        LocalDate thisDayLastMon = LocalDate.now().minusMonths(1);
+        LocalDate thisDayLastMon = LocalDate.now().minusDays(21);
         ZonedDateTime zonedDateTime = thisDayLastMon.atStartOfDay(ZoneId.systemDefault());
 
         ProvincePOExample example = new ProvincePOExample();
@@ -85,7 +85,31 @@ public class ProvinceServiceImpl implements ProvinceService {
         criteria.andProvinceshortnameEqualTo(provinceShortName)
                 .andDateGreaterThanOrEqualTo(java.util.Date.from(zonedDateTime.toInstant()));
         example.setOrderByClause("date ASC");
-
         return provinceDao.selectByExample(example);
+    }
+
+    @Override
+    public int update(NcovCity.News province, LocalDate date) {
+        ProvincePOExample example = new ProvincePOExample();
+        ProvincePOExample.Criteria criteria = example.createCriteria();
+        ZonedDateTime zonedDateTime = date.atStartOfDay(ZoneId.systemDefault());
+        criteria.andProvinceshortnameEqualTo(province.getProvinceShortName())
+                .andDateEqualTo(Date.from(zonedDateTime.toInstant()));
+        ProvincePO po = ProvinceMapper.mapToPO(province, date);
+        po.setId(provinceDao.selectByExample(example).get(0).getId());
+
+        provinceDao.updateByExample(po, example);
+        return 1;
+    }
+
+    @Override
+    public Boolean exists(String provinceShortName, LocalDate date) {
+        ProvincePOExample example = new ProvincePOExample();
+        ProvincePOExample.Criteria criteria = example.createCriteria();
+        ZonedDateTime zonedDateTime = date.atStartOfDay(ZoneId.systemDefault());
+        criteria.andDateEqualTo(Date.from(zonedDateTime.toInstant()))
+                .andProvinceshortnameEqualTo(provinceShortName);
+
+        return provinceDao.selectByExample(example).size() >= 1;
     }
 }

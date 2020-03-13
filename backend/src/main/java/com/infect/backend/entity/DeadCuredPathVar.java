@@ -20,7 +20,7 @@ public class DeadCuredPathVar extends PathVar {
     }
 
     @Override
-    public void insertData(ProvinceTendencyVO pTVO, ProvincePO po) {
+    public void insertData(ProvinceTendencyVO pTVO, ProvincePO po, ProvincePO poYesterday) {
         pTVO.getSeries().get(0).getData().add(po.getCuredcount());
         pTVO.getSeries().get(1).getData().add(po.getDeadcount());
     }

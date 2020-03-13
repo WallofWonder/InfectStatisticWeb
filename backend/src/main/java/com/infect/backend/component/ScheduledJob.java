@@ -29,13 +29,18 @@ public class ScheduledJob {
     @Resource(name = "nationServiceImpl")
     NationService nationService;
 
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /**
-     * 每天0点和12点更新数据库
+     * 每半小时更新一次数据库
      */
-    @Scheduled(cron = "* * 0,12 * * ? ")
+    @Scheduled(cron = "* 0,30 * * * ? ")
     public void cronJob() {
-        updateData();
+        log.info("=========================== >> 更新数据库...");
+        updateNationData();
+        updateProvinceDataToday();
+        upadateCityData();
+        log.info("=========================== >> 数据库更新完成。");
     }
 
     /**
@@ -43,35 +48,27 @@ public class ScheduledJob {
      */
     @PostConstruct
     public void updateAtStart() {
-        updateData();
-    }
-
-    /**
-     * 数据库更新操作
-     */
-    public void updateData() {
         log.info("=========================== >> 更新数据库...");
-        updateNation();
-        updateProvince();
-        upadateCity();
+        updateNationData();
+        updateProvinceData();
+        upadateCityData();
         log.info("=========================== >> 数据库更新完成。");
     }
 
     /**
      * 更新近20天省疫情数据
      */
-    public void updateProvince() {
+    private void updateProvinceData() {
 
-        log.info("更新各省疫情数据...");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        log.info("--------------------------- >> 更新各省疫情数据...");
         LocalDate date = LocalDate.now();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 21; i++) {
             LocalDate datet = LocalDate.now().minusDays(i);
-            if (provinceService.countDate(datet) == 0L) {
+            if (provinceService.countDate(date) == 0L) {
                 String dateTimeStr = formatter.format(datet);
                 String jsonString = DataRequest.request(DataRequest.PROVINCE_AND_CITY_STATISICS,
-                        "&date=" + dateTimeStr, i);
+                        "&date=" + dateTimeStr, i % 3);
                 NcovCity ncovCity = JSON.parseObject(jsonString, NcovCity.class);
                 for (NcovCity.News p : ncovCity.getNewsList()) {
                     provinceService.insertProvince(p, datet);
@@ -79,39 +76,52 @@ public class ScheduledJob {
                 log.info("已获取 " + dateTimeStr + " 数据");
             }
         }
-        log.info("各省疫情数据更新完成\n");
+        log.info("--------------------------- >> 各省疫情数据更新完成。");
     }
 
     /**
-     * 更新当日城市疫情数据
+     * 更新当前各省数据
      */
-    public void upadateCity() {
-        log.info("更新城市疫情数据...");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private void updateProvinceDataToday() {
+        log.info("--------------------------- >> 更新当前各省疫情数据...");
+        LocalDate date = LocalDate.now();
+        String dateTimeStr = formatter.format(date);
+        String jsonString = DataRequest.request(DataRequest.PROVINCE_AND_CITY_STATISICS,
+                "&date=" + dateTimeStr, 0);
+        NcovCity ncovCity = JSON.parseObject(jsonString, NcovCity.class);
+        for (NcovCity.News p : ncovCity.getNewsList()) {
+            provinceService.update(p, date);
+        }
+        log.info("--------------------------- >> 当前各省疫情数据更新完成。");
+    }
+
+    /**
+     * 更新当前城市疫情数据
+     */
+    private void upadateCityData() {
+        log.info("--------------------------- >> 更新全国城市疫情数据...");
         LocalDate date = LocalDate.now();
 
-        if (cityService.countDate(date) == 0L) {
-            cityService.truncate();
-            String dateTimeStr = formatter.format(date);
-            String jsonString = DataRequest.request(DataRequest.PROVINCE_AND_CITY_STATISICS,
-                    "&date=" + dateTimeStr, 0);
-            NcovCity ncovCity = JSON.parseObject(jsonString, NcovCity.class);
-            for (NcovCity.News p : ncovCity.getNewsList()) {
-                for (NcovCity.News.City city : p.getCities()) {
-                    cityService.insertCity(city, date, p.getProvinceShortName());
-                }
+        cityService.truncate();
+        String dateTimeStr = formatter.format(date);
+        String jsonString = DataRequest.request(DataRequest.PROVINCE_AND_CITY_STATISICS,
+                "&date=" + dateTimeStr, 0);
+        NcovCity ncovCity = JSON.parseObject(jsonString, NcovCity.class);
+        for (NcovCity.News p : ncovCity.getNewsList()) {
+            for (NcovCity.News.City city : p.getCities()) {
+                cityService.insertCity(city, date, p.getProvinceShortName());
             }
-            log.info("已获取 " + dateTimeStr + " 数据");
         }
-        log.info("城市疫情数据更新完成\n");
+        log.info("已获取 " + dateTimeStr + " 数据");
+
+        log.info("--------------------------- >> 全国城市疫情数据更新完成。");
     }
 
     /**
      * 更新全国疫情数据
      */
-    public void updateNation() {
-        log.info("更新全国疫情数据...");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private void updateNationData() {
+        log.info("--------------------------- >> 更新全国疫情数据...");
         LocalDate date = LocalDate.now();
         String dateTimeStr = formatter.format(date);
         String jsonString = DataRequest.request(DataRequest.NATION_STATISICS_AND_NEWS
@@ -119,6 +129,8 @@ public class ScheduledJob {
         Ncov ncov = JSON.parseObject(jsonString, Ncov.class);
         nationService.truncate();
         nationService.insert(ncov.getNewsList().get(0).getDesc());
-        log.info("全国疫情数据更新完成\n");
+        log.info("--------------------------- >> 全国疫情数据更新完成。");
     }
+
+
 }

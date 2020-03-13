@@ -1,8 +1,8 @@
 package com.infect.backend.utils;
 
+import com.infect.backend.entity.NcovCity;
 import com.infect.backend.model.CityPO;
 import com.infect.backend.model.CityVO;
-import com.infect.backend.entity.NcovCity;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.sql.Date;
@@ -61,7 +61,7 @@ public class CityMapper {
                 .date(Date.from(zonedDateTime.toInstant()))
                 .provinceshortname(provinceShortName)
                 .cityname(city.getCityName())
-                .currentconfirmedcount(city.getConfirmedCount())
+                .currentconfirmedcount(city.getCurrentConfirmedCount())
                 .confirmedcount(city.getConfirmedCount())
                 .curedcount(city.getCuredCount())
                 .deadcount(city.getDeadCount())
