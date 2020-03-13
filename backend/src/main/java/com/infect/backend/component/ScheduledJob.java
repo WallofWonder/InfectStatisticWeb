@@ -11,10 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Component
 @Slf4j
@@ -30,9 +30,26 @@ public class ScheduledJob {
     NationService nationService;
 
 
-    //表示每隔10分钟执行一次
-    @Scheduled(fixedRate = 600000)
+    /**
+     * 每天0点和12点更新数据库
+     */
+    @Scheduled(cron = "* * 0,12 * * ? ")
     public void cronJob() {
+        updateData();
+    }
+
+    /**
+     * 应用启动时更新数据库
+     */
+    @PostConstruct
+    public void updateAtStart() {
+        updateData();
+    }
+
+    /**
+     * 数据库更新操作
+     */
+    public void updateData() {
         log.info("=========================== >> 更新数据库...");
         updateNation();
         updateProvince();
