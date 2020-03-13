@@ -10,7 +10,6 @@
         <div align="center">
             <echart :province="province"></echart>
         </div>
-        <button @click="showMes">测试是否收到数据</button>
     </div>
 </template>
 
@@ -23,10 +22,10 @@
         data () {
             return {
                 message: [
-                    { title: '现有确诊', num: 10, changenum: 5},
-                    { title: '累计确诊', num: 10, changenum: 5},
-                    { title: '累计治愈', num: 10, changenum: 5},
-                    { title: '累计死亡', num: 10, changenum: 5}
+                    { title: '现有确诊', num: '', changenum: ''},
+                    { title: '累计确诊', num: '', changenum: ''},
+                    { title: '累计治愈', num: '', changenum: ''},
+                    { title: '累计死亡', num: '', changenum: ''}
                 ],
                 Styles: [
                     { color: '#ff6a57' },
@@ -37,13 +36,13 @@
                 province: this.$route.query.name
             }
         },
-        mounted() {
+        created() {
             this.getData('http://localhost:8888/statistics/provinces/one/')
         },
         methods: {
             getData (url) {
                 let that = this
-                this.axios.get(url + encodeURI(encodeURI(that.province)))
+                this.axios.get(url + encodeURI(encodeURI(that.$route.query.name)))
                     .then(function (response) {
                         let datas=response.data
                         that.message[0].num=datas.currentConfirmedCount
@@ -59,13 +58,9 @@
                                 that.message[i].changenum='+'+that.message[i].changenum
                             }
                         }
-                        console.log(datas)
                     }, function (err) {
                         console.log(err)
                     })
-            },
-            showMes () {
-                console.log(this.province)
             }
         }
     }

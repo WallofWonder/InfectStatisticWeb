@@ -39,6 +39,7 @@
                 this.axios.get(url)
                     .then(function (response) {
                         let datas = response.data.provinces
+                        console.log(datas)
                         for(var i=0;i<datas.length;++i){
                             that.mydata.push({
                                 name: datas[i].name,

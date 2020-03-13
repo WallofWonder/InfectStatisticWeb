@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div align="center">{{"更新至"+time}}</div>
+        <div align="center">{{"数据更新至"+time}}</div>
         <div class="round">
             <el-row  class="messages">
                 <messageshower  v-for="(item,index) in message" :key="index" :title="item.title" :sum="item.num" :changenum="item.changenum" :styles="Styles[index]" :span="8">
@@ -22,12 +22,12 @@
             return {
                 time:'',
                 message: [
-                    { title: '现有确诊', num: 10, changenum: 5},
-                    { title: '现有疑似', num: 10, changenum: 5},
-                    { title: '现有重症', num: 10, changenum: 5},
-                    { title: '累计确诊', num: 10, changenum: 5},
-                    { title: '累计治愈', num: 10, changenum: 5},
-                    { title: '累计死亡', num: 10, changenum: 5}
+                    { title: '现有确诊', num: '', changenum: ''},
+                    { title: '现有疑似', num: '', changenum: ''},
+                    { title: '现有重症', num: '', changenum: ''},
+                    { title: '累计确诊', num: '', changenum: ''},
+                    { title: '累计治愈', num: '', changenum: ''},
+                    { title: '累计死亡', num: '', changenum: ''}
                 ],
                 Styles: [
                     { color: '#ff6a57' },
@@ -39,7 +39,7 @@
                 ]
             }
         },
-        mounted() {
+        created() {
             this.getData('http://localhost:8888/nations/all')
         },
         methods: {
@@ -66,7 +66,6 @@
                                 that.message[i].changenum='+'+that.message[i].changenum
                             }
                         }
-                        console.log(datas)
                     }, function (err) {
                         console.log(err)
                     })
