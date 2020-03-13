@@ -66,7 +66,7 @@ public class ScheduledJob {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.now();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 21; i++) {
             LocalDate datet = LocalDate.now().minusDays(i);
             if (provinceService.countDate(datet) == 0L) {
                 String dateTimeStr = formatter.format(datet);

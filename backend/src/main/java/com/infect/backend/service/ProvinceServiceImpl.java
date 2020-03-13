@@ -1,8 +1,8 @@
 package com.infect.backend.service;
 
 import com.infect.backend.dao.ProvinceDao;
-import com.infect.backend.model.ProvinceMapVO;
 import com.infect.backend.entity.NcovCity;
+import com.infect.backend.model.ProvinceMapVO;
 import com.infect.backend.model.ProvincePO;
 import com.infect.backend.model.ProvincePOExample;
 import com.infect.backend.model.ProvinceVO;
@@ -77,7 +77,7 @@ public class ProvinceServiceImpl implements ProvinceService {
 
     @Override
     public List<ProvincePO> selectByName(String provinceShortName) {
-        LocalDate thisDayLastMon = LocalDate.now().minusMonths(1);
+        LocalDate thisDayLastMon = LocalDate.now().minusDays(21);
         ZonedDateTime zonedDateTime = thisDayLastMon.atStartOfDay(ZoneId.systemDefault());
 
         ProvincePOExample example = new ProvincePOExample();

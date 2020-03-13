@@ -6,19 +6,20 @@ import com.infect.backend.model.ProvinceTendencyVO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CurrentConfirmedPathVar extends PathVar {
+public class ConfirmedIncrPathVar extends PathVar {
     @Override
     public List<ProvinceTendencyVO.Serie> getSeries() {
         List<ProvinceTendencyVO.Serie> series = new ArrayList<>();
-        series.add(ProvinceTendencyVO.Serie.builder().name("现存确诊")
+        series.add(ProvinceTendencyVO.Serie.builder().name("新增确诊")
                 .data(new ArrayList<>())
                 .build());
         return series;
     }
 
     @Override
-    public void insertData(ProvinceTendencyVO pTVO, ProvincePO po) {
-        pTVO.getSeries().get(0).getData().add(po.getCurrentconfirmedcount());
+    public void insertData(ProvinceTendencyVO pTVO, ProvincePO po, ProvincePO poYesterday) {
+        int confirmedIncr = po.getConfirmedcount() - poYesterday.getConfirmedcount();
+        pTVO.getSeries().get(0).getData().add(confirmedIncr);
     }
 
 }
