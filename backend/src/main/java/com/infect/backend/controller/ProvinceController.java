@@ -5,6 +5,7 @@ import com.infect.backend.model.ProvinceTendencyVO;
 import com.infect.backend.model.ProvinceVO;
 import com.infect.backend.service.ProvinceService;
 import com.infect.backend.utils.ProvinceMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/statistics")
+@Slf4j
 public class ProvinceController {
 
     @Resource(name = "provinceServiceImpl")
@@ -28,6 +30,7 @@ public class ProvinceController {
     @GetMapping("/provinces/{type}")
     @ResponseBody
     ProvinceMapVO getNationalProvinces(@PathVariable String type) {
+        log.info("收到请求：/statistics/provinces/" + type);
         return provinceService.getNationalProvince(LocalDate.now(), type);
     }
 
@@ -42,6 +45,7 @@ public class ProvinceController {
     @ResponseBody
     ProvinceVO getProvince(@PathVariable String province) throws UnsupportedEncodingException {
         String decodedName = URLDecoder.decode(URLDecoder.decode(province, "UTF-8"), "UTF-8");
+        log.info("收到请求：/statistics/one/" + decodedName);
         return provinceService.selectByNameAndDate(decodedName, LocalDate.now());
     }
 
@@ -58,6 +62,7 @@ public class ProvinceController {
     ProvinceTendencyVO getTendency(@PathVariable String province, @PathVariable String type)
             throws UnsupportedEncodingException {
         String decodedName = URLDecoder.decode(URLDecoder.decode(province, "UTF-8"), "UTF-8");
+        log.info("收到请求：/statistics/one/tends/" + decodedName + "/" + type);
         return ProvinceMapper.mapToTendency(provinceService.selectByName(decodedName), type);
     }
 }

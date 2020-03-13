@@ -2,6 +2,7 @@ package com.infect.backend.controller;
 
 import com.infect.backend.model.CityVO;
 import com.infect.backend.service.CityService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/cities")
+@Slf4j
 public class CityController {
 
     @Resource(name = "cityServiceImpl")
@@ -31,6 +33,7 @@ public class CityController {
     @ResponseBody
     public List<CityVO> getCities(@PathVariable String province) throws UnsupportedEncodingException {
         String decodedName = URLDecoder.decode(URLDecoder.decode(province, "UTF-8"), "UTF-8");
+        log.info("收到请求：/citieslist/" + decodedName);
         return cityService.selectCities(decodedName);
     }
 }

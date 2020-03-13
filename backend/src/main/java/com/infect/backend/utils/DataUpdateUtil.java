@@ -1,45 +1,40 @@
-package com.infect.backend.component;
+package com.infect.backend.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.infect.backend.entity.Ncov;
 import com.infect.backend.entity.NcovCity;
-import com.infect.backend.service.CityService;
-import com.infect.backend.service.NationService;
-import com.infect.backend.service.ProvinceService;
-import com.infect.backend.utils.DataRequest;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
+import com.infect.backend.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
+import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-@Component
-public class MyApplicationRunner implements ApplicationRunner {
+public class DataUpdateUtil {
 
-    @Resource(name = "provinceServiceImpl")
-    ProvinceService provinceService;
+    private static ProvinceService provinceService;
+    private static CityService cityService;
+    private static NationService nationService;
 
-    @Resource(name = "cityServiceImpl")
-    CityService cityService;
+    @Autowired
+    public void setProvinceService(ProvinceServiceImpl provinceService) {
+        DataUpdateUtil.provinceService = provinceService;
+    }
 
-    @Resource(name = "nationServiceImpl")
-    NationService nationService;
+    @Autowired
+    public void setCityService(CityServiceImpl cityService) {
+        DataUpdateUtil.cityService = cityService;
+    }
 
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-        System.out.println("更新数据库...");
-        updateNation();
-        updateProvince();
-        upadateCity();
-        System.out.println("服务已启动。");
+    @Autowired
+    public void setNationService(NationServiceImpl nationService) {
+        DataUpdateUtil.nationService = nationService;
     }
 
     /**
-     * 更新近10天省疫情数据
+     * 更新近20天省疫情数据
      */
-    public void updateProvince() {
+    public static void updateProvince() {
         System.out.println("更新各省疫情数据...");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.now();
@@ -63,7 +58,7 @@ public class MyApplicationRunner implements ApplicationRunner {
     /**
      * 更新当日城市疫情数据
      */
-    public void upadateCity() {
+    public static void upadateCity() {
         System.out.println("更新城市疫情数据...");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.now();
@@ -87,7 +82,7 @@ public class MyApplicationRunner implements ApplicationRunner {
     /**
      * 更新全国疫情数据
      */
-    public void updateNation() {
+    public static void updateNation() {
         System.out.println("更新全国疫情数据...");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.now();
