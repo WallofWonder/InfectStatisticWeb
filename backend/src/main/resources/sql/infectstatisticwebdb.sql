@@ -11,7 +11,7 @@
  Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 12/03/2020 17:21:48
+ Date: 13/03/2020 21:42:21
 */
 
 SET NAMES utf8mb4;
@@ -32,7 +32,7 @@ CREATE TABLE `city`  (
   `curedCount` int(11) NULL DEFAULT NULL COMMENT '治愈',
   `deadCount` int(11) NULL DEFAULT NULL COMMENT '死亡',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 427 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 425 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for nation
@@ -54,7 +54,7 @@ CREATE TABLE `nation`  (
   `deadIncr` int(11) NULL DEFAULT NULL COMMENT '死亡新增',
   `seriousIncr` int(11) NULL DEFAULT NULL COMMENT '重症新增',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for province
@@ -70,6 +70,6 @@ CREATE TABLE `province`  (
   `curedCount` int(11) NULL DEFAULT NULL COMMENT '治愈',
   `deadCount` int(11) NULL DEFAULT NULL COMMENT '死亡',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 681 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 715 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
