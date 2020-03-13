@@ -32,7 +32,7 @@
         props: ['province'],
         mounted () {
             this.drawLine()
-            this.getData(this.cureddeadUrl)
+            this.getData(this.currentUrl)
         },
         methods: {
             getData (url) {
@@ -74,7 +74,7 @@
                 that.myChart = this.$echarts.init(document.getElementById('myChart'))
                 // 设置相关参数
                 that.option = {
-                    backgroundColor: 'transparent',
+                    backgroundColor: 'aliceblue',
                     legend: {
                         data: that.legend
                     },
@@ -90,7 +90,6 @@
                     },
                     series: that.series
             }
-            // that.myChart.setOption(that.option)
             }
         }
     }

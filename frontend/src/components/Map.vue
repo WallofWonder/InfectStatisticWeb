@@ -58,12 +58,6 @@
             },
             //根据传入的省份，获取对应省份的相关数据
             getProvinces(param) {
-                // this.axios.get('http://localhost:8888/cities/list/'+encodeURI(encodeURI(param.name)))
-                //     .then(function (response) {
-                //         console.log(response)
-                //     }), function (err) {
-                //     console.log(err)
-                // }
                 this.$router.push({
                     path:'province',
                     name: 'province',
@@ -81,7 +75,7 @@
                 // that.myChart.off('click')
                 // 设置相关参数
                 that.option = {
-                    backgroundColor: 'transparent',
+                    backgroundColor:'aliceblue',
                     dataRange: {
                         x: 'left',
                         y: '70%',

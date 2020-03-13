@@ -5,11 +5,6 @@ import Home from "../views/Home"
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'Login',
-  //   component: Login
-  // },
   {
     path: '/',
     redirect: 'country',

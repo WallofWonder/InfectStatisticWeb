@@ -1,14 +1,17 @@
 <template>
     <div>
-        <div>{{province}}</div>
+        <div class="P">{{province}}</div>
         <div class="round">
             <el-row>
                 <messageshower  v-for="(item,index) in message" :key="index" :title="item.title" :sum="item.num" :changenum="item.changenum" :styles="Styles[index]" :span="6">
                 </messageshower>
             </el-row>
         </div>
-        <div align="center">
+        <div align="center" class="tg">
             <echart :province="province"></echart>
+        </div>
+        <div align="center" class="tg">
+            <Table :province="province"></Table>
         </div>
     </div>
 </template>
@@ -16,9 +19,10 @@
 <script>
     import echart from "../components/Echart";
     import messageshower from "../components/Messageshower";
+    import Table from "../components/Table";
     export default {
         name: "Province",
-        components: { echart,messageshower },
+        components: { echart,messageshower,Table },
         data () {
             return {
                 message: [
@@ -70,5 +74,12 @@
     .round {
         border-radius: 20px;
         background: aliceblue;
+    }
+    .tg {
+        margin-top: 20px;
+    }
+    .P {
+        font-size: 32px;
+        margin-left: 5%;
     }
 </style>
