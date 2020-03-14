@@ -32,9 +32,9 @@ public class ScheduledJob {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     /**
-     * 每半小时更新一次数据库
+     * 每10分钟更新一次数据库
      */
-    @Scheduled(cron = "* 0,30 * * * ? ")
+    @Scheduled(cron = "0 */10 * * * ? ")
     public void cronJob() {
         log.info("=========================== >> 更新数据库...");
         updateNationData();
@@ -124,11 +124,20 @@ public class ScheduledJob {
         log.info("--------------------------- >> 更新全国疫情数据...");
         LocalDate date = LocalDate.now();
         String dateTimeStr = formatter.format(date);
+
+
         String jsonString = DataRequest.request(DataRequest.NATION_STATISICS_AND_NEWS
                 , "&date=" + dateTimeStr, 1);
         Ncov ncov = JSON.parseObject(jsonString, Ncov.class);
+
+        date = date.minusDays(1);
+        dateTimeStr = formatter.format(date);
+        jsonString = DataRequest.request(DataRequest.NATION_STATISICS_AND_NEWS
+                , "&date=" + dateTimeStr, 2);
+        Ncov ncovFormer = JSON.parseObject(jsonString, Ncov.class);
+
         nationService.truncate();
-        nationService.insert(ncov.getNewsList().get(0).getDesc());
+        nationService.insert(ncov.getNewsList().get(0).getDesc(), ncovFormer.getNewsList().get(0).getDesc());
         log.info("--------------------------- >> 全国疫情数据更新完成。");
     }
 

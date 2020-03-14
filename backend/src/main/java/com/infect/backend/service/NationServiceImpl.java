@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 @Service
-public class NationServiceImpl implements NationService{
+public class NationServiceImpl implements NationService {
 
     @Resource
     private NationDao nationDao;
 
 
     @Override
-    public void insert(Ncov.NewsList.Desc desc) {
-        nationDao.insert(NationMapper.mapToPO(desc));
+    public void insert(Ncov.NewsList.Desc desc, Ncov.NewsList.Desc descFormer) {
+        nationDao.insert(NationMapper.mapToPO(desc, descFormer));
     }
 
     @Override

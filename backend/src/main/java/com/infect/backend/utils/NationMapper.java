@@ -11,7 +11,7 @@ public class NationMapper {
 
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public static NationPO mapToPO(Ncov.NewsList.Desc desc) {
+    public static NationPO mapToPO(Ncov.NewsList.Desc desc, Ncov.NewsList.Desc descFormer) {
         return NationPO.builder()
                 .modifytime(desc.getModifytime())
                 .confirmedcount(desc.getConfirmedcount())
@@ -20,12 +20,12 @@ public class NationMapper {
                 .curedcount(desc.getCuredcount())
                 .deadcount(desc.getDeadcount())
                 .seriouscount(desc.getSeriouscount())
-                .confirmedincr(desc.getConfirmedincr())
-                .currentconfirmedincr(desc.getCurrentconfirmedincr())
-                .suspectedincr(desc.getSuspectedincr())
-                .curedincr(desc.getCuredincr())
-                .deadincr(desc.getDeadincr())
-                .seriousincr(desc.getSeriousincr())
+                .confirmedincr(desc.getConfirmedcount()-descFormer.getConfirmedcount())
+                .currentconfirmedincr(desc.getCurrentconfirmedcount()-descFormer.getCurrentconfirmedcount())
+                .suspectedincr(desc.getSuspectedcount()-descFormer.getSuspectedcount())
+                .curedincr(desc.getCuredcount()-descFormer.getCuredcount())
+                .deadincr(desc.getDeadcount()-descFormer.getDeadcount())
+                .seriousincr(desc.getSeriouscount()-descFormer.getSeriouscount())
                 .build();
     }
 
