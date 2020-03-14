@@ -44,6 +44,8 @@ dozer
 
 Slf4j
 
+restful api
+
 mysql
 
 **前端：**
@@ -152,4 +154,4 @@ npm 6.13.4
 
     启动tomcat服务器
 
-    在浏览器地址栏输入http://localhost:xxxx/InfectStatisticWeb-frontend即可访问本应用（xxxx是你本地tomcat服务器的端口号）
+    在浏览器地址栏输入 http://localhost:xxxx/InfectStatisticWeb-frontend 即可访问本应用（xxxx是你本地tomcat服务器的端口号）
