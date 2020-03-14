@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.infect.backend.dao.CityDao">
+  <resultMap id="BaseResultMap" type="com.infect.backend.model.CityPO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="provinceShortName" jdbcType="VARCHAR" property="provinceshortname" />
+    <result column="cityName" jdbcType="VARCHAR" property="cityname" />
+    <result column="currentConfirmedCount" jdbcType="INTEGER" property="currentconfirmedcount" />
+    <result column="confirmedCount" jdbcType="INTEGER" property="confirmedcount" />
+    <result column="suspectedCount" jdbcType="INTEGER" property="suspectedcount" />
+    <result column="curedCount" jdbcType="INTEGER" property="curedcount" />
+    <result column="deadCount" jdbcType="INTEGER" property="deadcount" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, `date`, provinceShortName, cityName, currentConfirmedCount, confirmedCount, suspectedCount,
+    curedCount, deadCount
+  </sql>
+  <select id="selectByExample" parameterType="com.infect.backend.model.CityPOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from city
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from city
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from city
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.infect.backend.model.CityPOExample">
+    delete from city
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.infect.backend.model.CityPO" useGeneratedKeys="true">
+    insert into city (`date`, provinceShortName, cityName,
+      currentConfirmedCount, confirmedCount,
+      suspectedCount, curedCount, deadCount
+      )
+    values (#{date,jdbcType=TIMESTAMP}, #{provinceshortname,jdbcType=VARCHAR}, #{cityname,jdbcType=VARCHAR},
+      #{currentconfirmedcount,jdbcType=INTEGER}, #{confirmedcount,jdbcType=INTEGER},
+      #{suspectedcount,jdbcType=INTEGER}, #{curedcount,jdbcType=INTEGER}, #{deadcount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.infect.backend.model.CityPO" useGeneratedKeys="true">
+    insert into city
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="date != null">
+        `date`,
+      </if>
+      <if test="provinceshortname != null">
+        provinceShortName,
+      </if>
+      <if test="cityname != null">
+        cityName,
+      </if>
+      <if test="currentconfirmedcount != null">
+        currentConfirmedCount,
+      </if>
+      <if test="confirmedcount != null">
+        confirmedCount,
+      </if>
+      <if test="suspectedcount != null">
+        suspectedCount,
+      </if>
+      <if test="curedcount != null">
+        curedCount,
+      </if>
+      <if test="deadcount != null">
+        deadCount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provinceshortname != null">
+        #{provinceshortname,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null">
+        #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="currentconfirmedcount != null">
+        #{currentconfirmedcount,jdbcType=INTEGER},
+      </if>
+      <if test="confirmedcount != null">
+        #{confirmedcount,jdbcType=INTEGER},
+      </if>
+      <if test="suspectedcount != null">
+        #{suspectedcount,jdbcType=INTEGER},
+      </if>
+      <if test="curedcount != null">
+        #{curedcount,jdbcType=INTEGER},
+      </if>
+      <if test="deadcount != null">
+        #{deadcount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.infect.backend.model.CityPOExample" resultType="java.lang.Long">
+    select count(*) from city
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update city
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null">
+        `date` = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.provinceshortname != null">
+        provinceShortName = #{record.provinceshortname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityname != null">
+        cityName = #{record.cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentconfirmedcount != null">
+        currentConfirmedCount = #{record.currentconfirmedcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.confirmedcount != null">
+        confirmedCount = #{record.confirmedcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.suspectedcount != null">
+        suspectedCount = #{record.suspectedcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.curedcount != null">
+        curedCount = #{record.curedcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.deadcount != null">
+        deadCount = #{record.deadcount,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update city
+    set id = #{record.id,jdbcType=INTEGER},
+      `date` = #{record.date,jdbcType=TIMESTAMP},
+      provinceShortName = #{record.provinceshortname,jdbcType=VARCHAR},
+      cityName = #{record.cityname,jdbcType=VARCHAR},
+      currentConfirmedCount = #{record.currentconfirmedcount,jdbcType=INTEGER},
+      confirmedCount = #{record.confirmedcount,jdbcType=INTEGER},
+      suspectedCount = #{record.suspectedcount,jdbcType=INTEGER},
+      curedCount = #{record.curedcount,jdbcType=INTEGER},
+      deadCount = #{record.deadcount,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.infect.backend.model.CityPO">
+    update city
+    <set>
+      <if test="date != null">
+        `date` = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provinceshortname != null">
+        provinceShortName = #{provinceshortname,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null">
+        cityName = #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="currentconfirmedcount != null">
+        currentConfirmedCount = #{currentconfirmedcount,jdbcType=INTEGER},
+      </if>
+      <if test="confirmedcount != null">
+        confirmedCount = #{confirmedcount,jdbcType=INTEGER},
+      </if>
+      <if test="suspectedcount != null">
+        suspectedCount = #{suspectedcount,jdbcType=INTEGER},
+      </if>
+      <if test="curedcount != null">
+        curedCount = #{curedcount,jdbcType=INTEGER},
+      </if>
+      <if test="deadcount != null">
+        deadCount = #{deadcount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.infect.backend.model.CityPO">
+    update city
+    set `date` = #{date,jdbcType=TIMESTAMP},
+      provinceShortName = #{provinceshortname,jdbcType=VARCHAR},
+      cityName = #{cityname,jdbcType=VARCHAR},
+      currentConfirmedCount = #{currentconfirmedcount,jdbcType=INTEGER},
+      confirmedCount = #{confirmedcount,jdbcType=INTEGER},
+      suspectedCount = #{suspectedcount,jdbcType=INTEGER},
+      curedCount = #{curedcount,jdbcType=INTEGER},
+      deadCount = #{deadcount,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="truncate">
+    truncate table city
+  </update>
+</mapper>
