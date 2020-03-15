@@ -73,9 +73,13 @@ echarts
 
 #### 后端
 
-语言支持： java8.0以上
+环境要求：
 
-数据库：mysql8.0
+java 1.8.x
+
+Apache Maven 3.6.x
+
+mysql 8.0.x
 
 - 将backend文件夹作为工程导入IDE
 - 创建mysql数据库，命名为infectstatisticwebdb
@@ -88,9 +92,7 @@ echarts
 
 #### **前端**
 
-确保已经安装node和npm
-
-开发者使用的版本:
+环境要求
 
 node v12.15.0
 
@@ -139,7 +141,7 @@ npm 6.13.4
 
 - **后端**
 
-    控制台进入后端jar包所在目录，输入命令运行，**默认运行在8888端口**：
+    控制台进入后端jar包所在目录，输入命令运行（**默认运行在8888端口**，**mysql账号：root 密码；root**）：
 
     ```
     > java -jar InfectStatisticWeb-backend-1.0.0.jar
@@ -147,7 +149,16 @@ npm 6.13.4
     控制台最后预期输出参考:
     2020-03-14 13:53:03.960  INFO 11344 --- [           main] com.infect.backend.BackendApplication    : Started BackendApplication in 7.812 seconds (JVM running for 8.263)
     ```
-
+    
+    如果是用源代码打包部署，请进入backend文件夹输入命令：
+    ```
+    powershell控制台下：> mvn package '-Dmaven.test.skip=true'
+    cmd控制台下：> mvn package -Dmaven.test.skip=true
+    ```
+    按照上文方法运行在 `target` 文件夹下的 `InfectStatisticWeb-backend-1.0.0.jar` :
+    ```
+    > java -jar InfectStatisticWeb-backend-1.0.0.jar
+    ```
 - **前端**
 
     将前端的rar压缩文件解压到Tomcat根目录的webapps文件夹下
