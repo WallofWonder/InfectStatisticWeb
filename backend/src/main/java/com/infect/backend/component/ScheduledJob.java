@@ -44,6 +44,18 @@ public class ScheduledJob {
     }
 
     /**
+     * 每天0点10分更新数据库
+     */
+    @Scheduled(cron = "0 10 0 * * ? ")
+    public void daliyJob() {
+        log.info("=========================== >> 更新数据库...");
+        updateNationData();
+        updateProvinceData();
+        upadateCityData();
+        log.info("=========================== >> 数据库更新完成。");
+    }
+
+    /**
      * 应用启动时更新数据库
      */
     @PostConstruct
