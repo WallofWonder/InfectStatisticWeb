@@ -137,11 +137,15 @@ npm 6.13.4
 ```
 |-- InfectStatisticWeb-frontend-1.0.0.rar //前端
 |-- InfectStatisticWeb-backend-1.0.0.jar //后端
+|-- infectstatisticwebdb.sql //数据库脚本
 ```
 
 - **后端**
 
-    控制台进入后端jar包所在目录，输入命令运行（**默认运行在8888端口**，**mysql账号：root 密码；root**）：
+    - 创建mysql数据库，命名为`infectstatisticwebdb`
+    - 运行`infectstatisticwebdb.sql`脚本
+    - 控制台进入后端jar包所在目录，输入命令运行（**默认运行在8888端口**，**mysql账号：root 密码；root**）：
+    
 
     ```
     > java -jar InfectStatisticWeb-backend-1.0.0.jar
