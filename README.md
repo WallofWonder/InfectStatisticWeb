@@ -170,3 +170,5 @@ npm 6.13.4
     启动tomcat服务器
 
     在浏览器地址栏输入 http://localhost:xxxx/InfectStatisticWeb-frontend 即可访问本应用（xxxx是你本地tomcat服务器的端口号）
+    
+    （如果读者想部署到云的话请麻烦手动修改前端源代码，把http请求中的localhost替换成后端服务器的公网ip再打包部署吧，前端同学暂时还没找到自动获取公网ip的方法。如果你有什么建议欢迎email或者issue）
