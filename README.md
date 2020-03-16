@@ -159,7 +159,7 @@ npm 6.13.4
     powershell控制台下：> mvn package '-Dmaven.test.skip=true'
     cmd控制台下：> mvn package -Dmaven.test.skip=true
     ```
-    按照上文方法运行在 `target` 文件夹下的 `InfectStatisticWeb-backend-1.0.0.jar` :
+    按照上文方法建立数据库，并运行在 `target` 文件夹下的 `InfectStatisticWeb-backend-1.0.0.jar` :
     ```
     > java -jar InfectStatisticWeb-backend-1.0.0.jar
     ```
